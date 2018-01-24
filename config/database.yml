@@ -6,22 +6,22 @@
 #
 default: &default
   adapter: postgresql
-  username: 'super'
-  password: 'superuser'
+  username: <%= ENV['POSTGRES_USER'] %>
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
 
 development:
   <<: *default
-  database: todos
+  database: <%= ENV['DATABASE_DEV'] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: todos
+  database: <%= ENV['DATABASE_TEST'] %>
 
 production:
   <<: *default
-  database: todos
+  database: <%= ENV['DATABASE_PRODUCTION'] %>

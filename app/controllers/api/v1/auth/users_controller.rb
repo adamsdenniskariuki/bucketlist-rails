@@ -5,11 +5,11 @@ module Api
     module Auth
       class UsersController < ApplicationController
 
-        before_action :authenticate_user, :except => [:register, :login, :reset_password]
+        before_action :authenticate_user, :only => [:edit_user]
 
         # POST /register/
         def register
-          @user = User.new(reg_params)
+          @user = User.new(auth_params)
           if(@user.save)
             render json: {"message": "User registered successfully!"}, status: 200
           else
@@ -19,8 +19,8 @@ module Api
 
         # POST /login/
         def login
-          user = User.find_by("email": reg_params[:email])
-          if(user and user.authenticate(reg_params[:password]))
+          user = User.find_by("email": auth_params[:email])
+          if(user and user.authenticate(auth_params[:password]))
             render json: {
               "message": "login successful",
               "token": JwtAuth.encode({:sub => user.id})
@@ -33,13 +33,13 @@ module Api
         # PUT /edit_user/
         def edit_user
           user = User.find(@current_user)
-          if(reg_params[:email].present?)
+          if(auth_params[:email].present?)
             render json: {"message": "Update NOT successfull: The email cannot be changed"}, status: 400
           else
-            if(reg_params[:password].blank?)
+            if(auth_params[:password].blank?)
               render json: {"message": "Update NOT successfull: The password cannot be empty"}, status: 400
             else
-              if(user.update_attributes(reg_params))
+              if(user.update_attributes(auth_params))
                 render json: {"message": "Update successfull " + user.errors.full_messages.join(", ")}, status: 200
               else
                 render json: {"message": "Update NOT successfull: " + user.errors.full_messages.join(", ")}, status: 400
@@ -50,7 +50,7 @@ module Api
 
         # POST /reset_password/
         def reset_password
-          user = User.find_by("email": reg_params[:email])
+          user = User.find_by("email": auth_params[:email])
           if(user)
             render json: {"message": "User found", "Password reset link": "http://www.andela.com"}, status: 200
           else
@@ -58,27 +58,8 @@ module Api
           end
         end
 
-        private def reg_params
+        private def auth_params
           params.permit(:name, :email, :password, :password_confirmation)
-        end
-
-        private def authenticate_user
-          auth_header = request.headers[:Authorization]
-          if(auth_header)
-            token = auth_header.split(" ").last
-            if (token)
-              user = JwtAuth.decode(token)
-              if user
-                  @current_user ||= user['sub']
-              else
-                render json: {"message": "Access denied. Invalid login credentials. Please log in again"}, status: 401
-              end
-            else
-              render json: {"message": "Invalid token"}, status: 401
-            end
-          else
-            render json: {"message": "Access denied. Please log in"}, status: 401
-          end
         end
 
       end
