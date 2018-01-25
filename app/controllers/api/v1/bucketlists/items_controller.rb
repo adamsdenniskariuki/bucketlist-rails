@@ -9,9 +9,9 @@ module Api
         def create_item()
           item = Item.new(item_params.merge({user_id: @current_user, todo_id: params[:id]}))
           if(item.save)
-            render json: {"message": "Item created successfully"}, status: 200
+            render json: {"message": "Item created successfully"}, status: 201
           else
-            render json: {"message": "Item NOT created due to the following errors: " + item.errors.full_messages.join(", ")}, status: 400
+            render json: {"message": "Item NOT created due to the following errors: " + item.errors.full_messages.join(", ")}, status: 422
           end
         end
 
@@ -52,7 +52,7 @@ module Api
             else
               render json: {
                 "message": "The following errors occured: " + item.errors.full_messages.join(", ")
-                }, status: 500
+                }, status: 422
             end
           else
             render json: {"message": "Item NOT found"}, status: 404
@@ -70,7 +70,7 @@ module Api
             else
               render json: {
                 "message": "The following errors occured: " + item.errors.full_messages.join(", ")
-                }, status: 500
+                }, status: 422
             end
           else
             render json: {"message": "Item NOT found"}, status: 404
