@@ -1,3 +1,5 @@
+require "#{Rails.root}/lib/jwtauth.rb"
+
 class ApplicationController < ActionController::API
 
   # method to authenticate user tokens

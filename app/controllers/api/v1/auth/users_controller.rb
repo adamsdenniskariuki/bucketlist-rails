@@ -1,5 +1,3 @@
-require "#{Rails.root}/lib/jwtauth.rb"
-
 module Api
   module V1
     module Auth
