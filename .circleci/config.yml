@@ -53,12 +53,11 @@ jobs:
       - type: shell
         command: |
           mkdir -p /tmp/test-results
-          TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | tr '\n' ' ' | circleci tests split --split-by=timings)"
-          bundle exec rspec --profile 10 \
+          TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
+          bundle exec rspec --format documentation \
                             --format RspecJunitFormatter \
-                            --out test_results/rspec.xml \
-                            --format progress \
-                            -- ${TEST_FILES}
+                            --out /tmp/test-results/rspec.xml \
+                            -- $(echo "${TEST_FILES}" | sed -e 's/\n/\\n/' -e 's/ /\ /')
 
 
       # Save test results for timing analysis
