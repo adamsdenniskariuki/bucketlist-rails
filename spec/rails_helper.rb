@@ -10,6 +10,7 @@ require 'database_cleaner'
 require 'capybara'
 require 'shoulda/matchers'
 require 'simplecov'
+require 'coveralls'
 
 if ENV['CIRCLE_ARTIFACTS']
   dir = File.join(ENV['CIRCLE_ARTIFACTS'], "coverage")
@@ -17,6 +18,8 @@ if ENV['CIRCLE_ARTIFACTS']
 end
 
 SimpleCov.start
+
+Coveralls.wear!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are

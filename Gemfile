@@ -35,6 +35,7 @@ group :test do
   gem 'capybara'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'simplecov', :require => false
+  gem 'coveralls', require: false
 end
 
 group :development, :test do
