@@ -30,6 +30,7 @@ gem 'puma', '~> 3.7'
 
 group :test do
   gem 'rspec-rails'
+  gem 'rspec_junit_formatter'
   gem 'database_cleaner'
   gem 'capybara'
   gem 'shoulda-matchers', '~> 3.1'
