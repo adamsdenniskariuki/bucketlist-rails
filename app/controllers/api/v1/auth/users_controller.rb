@@ -7,11 +7,11 @@ module Api
 
         # POST /register/
         def register
-          @user = User.new(auth_params)
-          if(@user.save)
-            render json: {"message": "User registered successfully!"}, status: 201
+          user = User.new(auth_params)
+          if(user.save)
+            render json: {"message": Messages.registration_successful}, status: 201
           else
-            render json: {"message": "User not registered due to the following errors: " + user.errors.full_messages.join(", ")}, status: 422
+            render json: {"message": "" + Messages.registration_failed(user.errors.full_messages)}, status: 422
           end
         end
 
@@ -20,11 +20,11 @@ module Api
           user = User.find_by("email": auth_params[:email])
           if(user and user.authenticate(auth_params[:password]))
             render json: {
-              "message": "login successful",
+              "message": Messages.login_successful,
               "token": JwtAuth.encode({:sub => user.id})
               }, status: 200
           else
-            render json: {"message": "User not found"}, status: 401
+            render json: {"message": Messages.login_failed}, status: 401
           end
         end
 
@@ -32,15 +32,15 @@ module Api
         def edit_user
           user = User.find(@current_user)
           if(auth_params[:email].present?)
-            render json: {"message": "Update NOT successfull: The email cannot be changed"}, status: 422
+            render json: {"message": Messages.update_email_failure}, status: 422
           else
             if(auth_params[:password].blank?)
-              render json: {"message": "Update NOT successfull: The password cannot be empty"}, status: 422
+              render json: {"message": Messages.update_invalid_password}, status: 422
             else
               if(user.update_attributes(auth_params))
-                render json: {"message": "Update successfull " + user.errors.full_messages.join(", ")}, status: 200
+                render json: {"message": Messages.update_successful}, status: 200
               else
-                render json: {"message": "Update NOT successfull: " + user.errors.full_messages.join(", ")}, status: 422
+                render json: {"message": Messages.update_failed(user.errors.full_messages)}, status: 422
               end
             end
           end
@@ -50,9 +50,9 @@ module Api
         def reset_password
           user = User.find_by("email": auth_params[:email])
           if(user)
-            render json: {"message": "User found", "Password reset link": "http://www.andela.com"}, status: 200
+            render json: {"message": Messages.password_reset_user_found, "link": "http://www.andela.com"}, status: 200
           else
-            render json: {"message": "User not found"}, status: 422
+            render json: {"message": Messages.password_reset_user_not_found}, status: 422
           end
         end
 

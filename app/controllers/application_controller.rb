@@ -1,4 +1,5 @@
 require "#{Rails.root}/lib/jwtauth.rb"
+require "#{Rails.root}/lib/messages.rb"
 
 class ApplicationController < ActionController::API
 
@@ -9,10 +10,10 @@ class ApplicationController < ActionController::API
       token = auth_header.split(" ").last
       if (token)
         user = JwtAuth.decode(token)
-        if user
+        if user and User.find(user['sub'])
             @current_user ||= user['sub']
         else
-          render json: {"message": "Access denied. Invalid login credentials. Please log in again"}, status: 401
+          render json: {"message": "Access denied. Invalid login credentials."}, status: 401
         end
       else
         render json: {"message": "Invalid token"}, status: 401
