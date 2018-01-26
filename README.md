@@ -1,24 +1,35 @@
-# README
+[![CircleCI](https://circleci.com/gh/adamsdenniskariuki/bucketlist-rails/tree/dev.svg?style=svg)](https://circleci.com/gh/adamsdenniskariuki/bucketlist-rails/tree/dev)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Bucket list API
 
-Things you may want to cover:
+    This is an API that allows a user to create a bucket list and add items to it.
 
-* Ruby version
+# API Endpoints
 
-* System dependencies
+        - POST /auth/login                              Logs a user in
 
-* Configuration
+        - POST /auth/register                           Register a user
 
-* Database creation
+        - POST /bucketlists/                            Create a new bucket list
 
-* Database initialization
+        - GET /bucketlists/                             List all the created bucket lists
 
-* How to run the test suite
+        - GET /bucketlists/<id>                         Get single bucket list
 
-* Services (job queues, cache servers, search engines, etc.)
+        - PUT /bucketlists/<id>                         Update this bucket list
 
-* Deployment instructions
+        - DELETE /bucketlists/<id>                      Delete this single bucket list
 
-* ...
+        - POST /bucketlists/<id>/items/                 Create a new item in bucket list
+
+        - PUT /bucketlists/<id>/items/<item_id>         Update a bucket list item
+
+        - DELETE /bucketlists/<id>/items/<item_id>      Delete an item in a bucket list
+
+    # Feedback
+
+        - Please leave a comment!
+
+    # Author
+
+        - Adams Kariuki Dennis (c) 2018
