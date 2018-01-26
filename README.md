@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/adamsdenniskariuki/bucketlist-rails/tree/dev.svg?style=svg)](https://circleci.com/gh/adamsdenniskariuki/bucketlist-rails/tree/dev)
+[![CircleCI](https://circleci.com/gh/adamsdenniskariuki/bucketlist-rails/tree/dev.svg?style=svg)](https://circleci.com/gh/adamsdenniskariuki/bucketlist-rails/tree/dev) [![Coverage Status](https://coveralls.io/repos/github/adamsdenniskariuki/bucketlist-rails/badge.svg?branch=dev)](https://coveralls.io/github/adamsdenniskariuki/bucketlist-rails?branch=dev)
 
 # Bucket list API
 
