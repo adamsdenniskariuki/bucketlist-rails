@@ -52,12 +52,12 @@ jobs:
       # Run rspec in parallel
       - type: shell
         command: |
-          bundle exec rspec --profile 10 \
+          bundle exec rspec --format progress \
                             --format RspecJunitFormatter \
-                            --out test_results/rspec.xml \
+                            --out /tmp/test-results/rspec.xml \
                             --format progress \
-                            $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
-
+                            -- \
+                            $TEST_FILES
 
       # Save test results for timing analysis
       - store_test_results:
