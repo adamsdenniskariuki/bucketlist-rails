@@ -34,7 +34,7 @@ group :test do
   gem 'database_cleaner'
   gem 'capybara'
   gem 'shoulda-matchers', '~> 3.1'
-  gem 'simplecov'
+  gem 'simplecov', :require => false
 end
 
 group :development, :test do
